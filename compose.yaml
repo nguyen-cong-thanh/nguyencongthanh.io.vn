@@ -1,0 +1,10 @@
+services:
+  hugo:
+    image: ghcr.io/gohugoio/hugo:v0.166.0
+    command: server --bind 0.0.0.0 --buildDrafts
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /project
+    volumes:
+      - .:/project
+    ports:
+      - "1313:1313"

@@ -1,0 +1,75 @@
+baseURL = "https://nguyencongthanh.io.vn/"
+title = "Nguyễn Công Thành"
+theme = "LoveIt"
+
+defaultContentLanguage = "vi"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+enableEmoji = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  defaultTheme = "auto"
+  dateFormat = "2006-01-02"
+  [params.author]
+    name = "Nguyễn Công Thành"
+    link = "https://nguyencongthanh.io.vn/"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 6
+
+[languages]
+  [languages.vi]
+    weight = 1
+    locale = "vi"
+    label = "Tiếng Việt"
+    title = "Nguyễn Công Thành"
+    [languages.vi.params]
+      description = "Blog cá nhân của Nguyễn Công Thành"
+    [[languages.vi.menu.main]]
+      weight = 1
+      identifier = "posts"
+      name = "Bài viết"
+      url = "/posts/"
+    [[languages.vi.menu.main]]
+      weight = 2
+      identifier = "tags"
+      name = "Thẻ"
+      url = "/tags/"
+    [[languages.vi.menu.main]]
+      weight = 3
+      identifier = "about"
+      name = "Giới thiệu"
+      url = "/about/"
+
+  [languages.en]
+    weight = 2
+    locale = "en"
+    label = "English"
+    title = "Nguyen Cong Thanh"
+    [languages.en.params]
+      description = "Personal blog of Nguyen Cong Thanh"
+    [[languages.en.menu.main]]
+      weight = 1
+      identifier = "posts"
+      name = "Posts"
+      url = "/posts/"
+    [[languages.en.menu.main]]
+      weight = 2
+      identifier = "tags"
+      name = "Tags"
+      url = "/tags/"
+    [[languages.en.menu.main]]
+      weight = 3
+      identifier = "about"
+      name = "About"
+      url = "/about/"
