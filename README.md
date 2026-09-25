@@ -72,12 +72,4 @@ LoveIt has no series support, so this is implemented in the site:
 
 The workflow [.github/workflows/hugo.yaml](.github/workflows/hugo.yaml) builds and deploys on every push to `main`. The Hugo version is declared in `HUGO_VERSION` in the workflow and in the image tag in [compose.yaml](compose.yaml); change both when upgrading.
 
-One-time setup:
-
-1. GitHub → Settings → Pages → Source: **GitHub Actions**. Custom domain: `nguyencongthanh.io.vn`; enable Enforce HTTPS once the certificate is issued.
-2. DNS on Cloudflare for the apex `nguyencongthanh.io.vn` (subdomains used by cloudflared tunnel are unaffected):
-   - Four A records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; or one CNAME `@` → `nguyen-cong-thanh.github.io`.
-   - Keep the records **DNS only** until GitHub has issued the certificate. If the proxy is enabled afterwards, set SSL/TLS mode to **Full (strict)**.
-3. Optional: verify the domain in the Pages section of the GitHub account settings (TXT record provided by GitHub).
-
 `static/CNAME` keeps the custom domain across deployments.
