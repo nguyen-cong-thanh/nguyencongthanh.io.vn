@@ -1,0 +1,9 @@
+# Site-specific strings, merged with LoveIt's i18n/vi.toml
+[series]
+other = "Series"
+
+[seriesPart]
+other = "Bài {{ .Part }}/{{ .Total }}"
+
+[seriesItem]
+other = "Bài {{ .Part }}"

@@ -6,6 +6,12 @@ defaultContentLanguage = "vi"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 enableEmoji = true
+capitalizeListTitles = false
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
 
 [pagination]
   pagerSize = 10
@@ -47,6 +53,11 @@ enableEmoji = true
       url = "/tags/"
     [[languages.vi.menu.main]]
       weight = 3
+      identifier = "series"
+      name = "Series"
+      url = "/series/"
+    [[languages.vi.menu.main]]
+      weight = 4
       identifier = "about"
       name = "Giới thiệu"
       url = "/about/"
@@ -70,6 +81,11 @@ enableEmoji = true
       url = "/tags/"
     [[languages.en.menu.main]]
       weight = 3
+      identifier = "series"
+      name = "Series"
+      url = "/series/"
+    [[languages.en.menu.main]]
+      weight = 4
       identifier = "about"
       name = "About"
       url = "/about/"

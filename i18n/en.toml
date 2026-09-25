@@ -1,0 +1,9 @@
+# Site-specific strings, merged with LoveIt's i18n/en.toml
+[series]
+other = "Series"
+
+[seriesPart]
+other = "Part {{ .Part }} of {{ .Total }}"
+
+[seriesItem]
+other = "Part {{ .Part }}"

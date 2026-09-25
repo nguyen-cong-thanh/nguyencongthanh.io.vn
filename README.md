@@ -1,61 +1,83 @@
 # nguyencongthanh.io.vn
 
-Site tĩnh xây dựng bằng [Hugo](https://gohugo.io/) (extended v0.166.0) với theme [LoveIt](https://github.com/dillonzq/LoveIt), triển khai lên GitHub Pages.
+Static site built with [Hugo](https://gohugo.io/) (extended v0.166.0) and the [LoveIt](https://github.com/dillonzq/LoveIt) theme, deployed to GitHub Pages.
 
 ## Clone
 
-Theme được quản lý bằng git submodule:
+The theme is managed as a git submodule:
 
 ```sh
 git clone --recurse-submodules git@github.com:nguyen-cong-thanh/nguyencongthanh.io.vn.git
-# hoặc, với bản clone đã có:
+# or, for an existing clone:
 git submodule update --init --recursive
 ```
 
-## Chạy local
+## Run locally
 
-Chỉ cần Docker. Lệnh sau chạy `hugo server` (bao gồm bài nháp) tại http://localhost:1313/:
+Only Docker is required. The following runs `hugo server` (including drafts) at http://localhost:1313/:
 
 ```sh
 docker compose up
 ```
 
-Container chạy với UID/GID `1000:1000` để file sinh ra thuộc user hiện tại. Nếu UID/GID máy khác, export biến `UID`/`GID` trước khi chạy.
+The container runs as UID/GID `1000:1000` so generated files belong to the current user. If your UID/GID differ, export `UID`/`GID` before running.
 
-Build một lần ra thư mục `public/`:
+Build once into `public/`:
 
 ```sh
 docker compose run --rm hugo --gc --minify
 ```
 
-## Viết bài song ngữ
+## Bilingual posts
 
-Ngôn ngữ mặc định là tiếng Việt (URL gốc `/`), tiếng Anh nằm dưới `/en/`. Mỗi bài là một thư mục, mỗi ngôn ngữ một file; hai file cùng thư mục được Hugo liên kết là bản dịch của nhau:
+Vietnamese is the default language (served at `/`); English is served under `/en/`. Each post is a directory with one file per language; Hugo links the two files in the same directory as translations of each other:
 
 ```
 content/posts/<slug>/index.vi.md
 content/posts/<slug>/index.en.md
 ```
 
-Tạo bài mới:
+Create a new post:
 
 ```sh
 docker compose run --rm hugo new content posts/<slug>/index.vi.md
 docker compose run --rm hugo new content posts/<slug>/index.en.md
 ```
 
-Bài mới có `draft = true`; đổi thành `false` để xuất bản.
+New posts have `draft = true`; set it to `false` to publish.
 
-## Triển khai
+## Series
 
-Workflow [.github/workflows/hugo.yaml](.github/workflows/hugo.yaml) build và deploy khi push lên `main`. Phiên bản Hugo khai báo ở `HUGO_VERSION` trong workflow và ở tag image trong [compose.yaml](compose.yaml); khi nâng cấp cần đổi cả hai.
+A series groups ordered posts (part 1, part 2, ...). Add the `series` taxonomy and a part number to the front matter of each language file:
 
-Thiết lập một lần:
+```toml
+series = ["Python cơ bản"]   # in index.vi.md
+series = ["Python basics"]   # in index.en.md
+series_weight = 2            # part number, same in both files
+```
 
-1. GitHub → Settings → Pages → Source: **GitHub Actions**. Custom domain: `nguyencongthanh.io.vn`, bật Enforce HTTPS sau khi chứng chỉ được cấp.
-2. DNS trên Cloudflare cho apex `nguyencongthanh.io.vn` (không ảnh hưởng các subdomain dùng cloudflared tunnel):
-   - 4 bản ghi A: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; hoặc một CNAME `@` → `nguyen-cong-thanh.github.io`.
-   - Để chế độ **DNS only** cho tới khi GitHub cấp xong chứng chỉ. Nếu sau đó bật proxy thì đặt SSL/TLS mode là **Full (strict)**.
-3. Tùy chọn: xác minh domain ở phần Pages trong cài đặt tài khoản GitHub (bản ghi TXT do GitHub cung cấp).
+- `/series/` (and `/en/series/`) lists all series; each series page lists its parts in `series_weight` order.
+- Every post in a series shows a box above its content with its part number, all parts of the series, and links to the previous and next parts.
 
-File `static/CNAME` giữ custom domain trong mỗi lần deploy.
+LoveIt has no series support, so this is implemented in the site:
+
+- [layouts/_partials/series.html](layouts/_partials/series.html): the series box.
+- [layouts/posts/single.html](layouts/posts/single.html): a copy of LoveIt's template with one added call to the series partial. After updating the theme, re-apply that change on top of the new `themes/LoveIt/layouts/posts/single.html`.
+- [layouts/series/term.html](layouts/series/term.html): series page ordered by part.
+- [i18n/](i18n/) and [assets/css/_custom.scss](assets/css/_custom.scss): labels and styles.
+
+`content/posts/python-basics-1` and `python-basics-2` are sample drafts; delete them once real posts exist.
+
+## Deployment
+
+The workflow [.github/workflows/hugo.yaml](.github/workflows/hugo.yaml) builds and deploys on every push to `main`. The Hugo version is declared in `HUGO_VERSION` in the workflow and in the image tag in [compose.yaml](compose.yaml); change both when upgrading.
+
+One-time setup:
+
+1. GitHub → Settings → Pages → Source: **GitHub Actions**. Custom domain: `nguyencongthanh.io.vn`; enable Enforce HTTPS once the certificate is issued.
+2. DNS on Cloudflare for the apex `nguyencongthanh.io.vn` (subdomains used by cloudflared tunnel are unaffected):
+   - Four A records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; or one CNAME `@` → `nguyen-cong-thanh.github.io`.
+   - Keep the records **DNS only** until GitHub has issued the certificate. If the proxy is enabled afterwards, set SSL/TLS mode to **Full (strict)**.
+3. Optional: verify the domain in the Pages section of the GitHub account settings (TXT record provided by GitHub).
+
+`static/CNAME` keeps the custom domain across deployments.

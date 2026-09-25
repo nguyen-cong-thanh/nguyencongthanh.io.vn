@@ -1,0 +1,38 @@
+{{- /* Series box: lists every part of each series the page belongs to; term .Pages is ordered by series_weight. */ -}}
+{{- range .GetTerms "series" -}}
+    {{- $term := . -}}
+    {{- $pages := .Pages -}}
+    {{- $current := 0 -}}
+    {{- range $i, $p := $pages -}}
+        {{- if eq $p $ -}}{{- $current = add $i 1 -}}{{- end -}}
+    {{- end -}}
+    <div class="series-box">
+        <div class="series-title">
+            <i class="fas fa-list-ol" aria-hidden="true"></i>&nbsp;<a href="{{ $term.RelPermalink }}">{{ $term.Title }}</a>
+            <span class="series-part">{{ T "seriesPart" (dict "Part" $current "Total" (len $pages)) }}</span>
+        </div>
+        <ol>
+            {{- range $pages -}}
+                <li>
+                    {{- if eq . $ -}}
+                        <strong>{{ .Title }}</strong>
+                    {{- else -}}
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    {{- end -}}
+                </li>
+            {{- end -}}
+        </ol>
+        <div class="series-nav">
+            {{- if gt $current 1 -}}
+                {{- with index $pages (sub $current 2) -}}
+                    <a class="series-prev" href="{{ .RelPermalink }}">&larr;&nbsp;{{ .Title }}</a>
+                {{- end -}}
+            {{- end -}}
+            {{- if lt $current (len $pages) -}}
+                {{- with index $pages $current -}}
+                    <a class="series-next" href="{{ .RelPermalink }}">{{ .Title }}&nbsp;&rarr;</a>
+                {{- end -}}
+            {{- end -}}
+        </div>
+    </div>
+{{- end -}}
