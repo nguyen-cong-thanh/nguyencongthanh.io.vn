@@ -29,3 +29,43 @@
     margin-left: auto;
   }
 }
+
+// Hide LoveIt's code block collapse toggle; blocks are always expanded (maxShownLines in hugo.toml).
+// Scoped like LoveIt's own rules (.single .content) so these win on specificity.
+.single .content .code-block .code-header {
+  .arrow,
+  .ellipses {
+    display: none;
+  }
+
+  &:hover {
+    cursor: default;
+  }
+
+  .code-title {
+    pointer-events: none;
+  }
+
+  // Posts use `text` blocks for program output
+  &.language-text .code-title::after {
+    content: "Output";
+  }
+
+  &.language-text .copy {
+    display: none;
+  }
+}
+
+// Output blocks (`text`): body text color, no line numbers, indented like line numbers
+.single .content .code-block code.language-text {
+  padding-left: 3ch; // lines up with single-digit line numbers (right-aligned in a 4ch column)
+  color: $global-font-color;
+
+  [theme=dark] & {
+    color: $global-font-color-dark;
+  }
+
+  span.line::before {
+    display: none;
+  }
+}

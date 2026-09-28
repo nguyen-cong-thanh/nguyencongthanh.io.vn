@@ -22,6 +22,10 @@ capitalizeListTitles = false
   [params.author]
     name = "Nguyễn Công Thành"
     link = "https://nguyencongthanh.io.vn/"
+  # Code blocks are always expanded; the collapse toggle is hidden in _custom.scss
+  [params.page.code]
+    copy = true
+    maxShownLines = 100000
 
 [markup]
   [markup.highlight]

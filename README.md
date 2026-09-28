@@ -66,7 +66,7 @@ LoveIt has no series support, so this is implemented in the site:
 - [layouts/series/term.html](layouts/series/term.html): series page ordered by part.
 - [i18n/](i18n/) and [assets/css/_custom.scss](assets/css/_custom.scss): labels and styles.
 
-`content/posts/python-basics-1` and `python-basics-2` are sample drafts; delete them once real posts exist.
+`content/posts/python-basics-1/index.en.md` and `python-basics-2/index.en.md` are placeholder drafts left from the series setup; replace them when the English versions are written.
 
 ## Deployment
 
