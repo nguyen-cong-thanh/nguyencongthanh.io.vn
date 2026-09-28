@@ -1,6 +1,6 @@
 +++
 title = "Python cơ bản – Bài 10: File và exception"
-date = 2026-09-25
+date = 2026-09-25T09:10:00+07:00
 draft = false
 tags = ["python", "lập trình cơ bản"]
 series = ["Python cơ bản"]

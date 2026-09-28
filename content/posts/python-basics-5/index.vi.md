@@ -1,6 +1,6 @@
 +++
 title = "Python cơ bản – Bài 5: Câu lệnh if"
-date = 2026-09-25
+date = 2026-09-25T09:05:00+07:00
 draft = false
 tags = ["python", "lập trình cơ bản"]
 series = ["Python cơ bản"]

@@ -1,6 +1,6 @@
 +++
 title = "Python cơ bản – Bài 1: Giới thiệu series"
-date = 2026-09-25
+date = 2026-09-25T09:01:00+07:00
 draft = false
 tags = ["python", "lập trình cơ bản"]
 series = ["Python cơ bản"]

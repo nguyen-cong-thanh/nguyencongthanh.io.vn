@@ -1,6 +1,6 @@
 +++
 title = "Python cơ bản – Bài 7: Nhập dữ liệu và vòng lặp while"
-date = 2026-09-25
+date = 2026-09-25T09:07:00+07:00
 draft = false
 tags = ["python", "lập trình cơ bản"]
 series = ["Python cơ bản"]
