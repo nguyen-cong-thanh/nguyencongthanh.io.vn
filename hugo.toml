@@ -26,6 +26,22 @@ capitalizeListTitles = false
   [params.page.code]
     copy = true
     maxShownLines = 100000
+  [params.home.profile]
+    enable = true
+    avatarURL = "https://github.com/nguyen-cong-thanh.png"
+    social = true
+  [params.home.posts]
+    enable = true
+  # Shown on the home page profile
+  [params.social]
+    GitHub = "nguyen-cong-thanh"
+    Facebook = "thanhnc.se"
+    Email = "thanhnc.se@gmail.com"
+    RSS = true
+    [params.social.TikTok]
+      url = "https://www.tiktok.com/@nguyencongthanh.io.vn"
+  [params.footer]
+    since = 2026
 
 [markup]
   [markup.highlight]
@@ -45,6 +61,8 @@ capitalizeListTitles = false
     title = "Nguyễn Công Thành"
     [languages.vi.params]
       description = "Blog cá nhân của Nguyễn Công Thành"
+      [languages.vi.params.home.profile]
+        subtitle = "Software engineer. Ghi chép về lập trình và những gì mình học được."
     [[languages.vi.menu.main]]
       weight = 1
       identifier = "posts"
@@ -73,6 +91,8 @@ capitalizeListTitles = false
     title = "Nguyen Cong Thanh"
     [languages.en.params]
       description = "Personal blog of Nguyen Cong Thanh"
+      [languages.en.params.home.profile]
+        subtitle = "Software engineer. Notes on programming and what I learn along the way."
     [[languages.en.menu.main]]
       weight = 1
       identifier = "posts"
