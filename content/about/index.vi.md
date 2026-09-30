@@ -8,7 +8,7 @@ Mình là Nguyễn Công Thành, một software engineer. Blog này là nơi mì
 
 ## Blog này có gì
 
-Hiện tại blog có series [Python cơ bản](/series/python-cơ-bản/), dành cho người mới bắt đầu. Các bài về sau sẽ thuộc mảng lập trình nói chung.
+Hiện tại blog có series [Python cơ bản](/series/python-co-ban/), dành cho người mới bắt đầu. Các bài về sau sẽ thuộc mảng lập trình nói chung.
 
 <!-- TODO: các chủ đề bạn dự định viết tiếp (ví dụ: ngôn ngữ, công cụ, mảng công việc bạn quan tâm). -->
 

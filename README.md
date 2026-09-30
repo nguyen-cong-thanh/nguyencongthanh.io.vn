@@ -46,6 +46,19 @@ docker compose run --rm hugo new content posts/<slug>/index.en.md
 
 New posts have `draft = true`; set it to `false` to publish.
 
+## URLs without diacritics
+
+`removePathAccents = true` in [hugo.toml](hugo.toml) strips accents from generated paths, so a tag such as "lập trình cơ bản" is served at `/tags/lap-trinh-co-ban/`. Hugo does not transliterate `đ`/`Đ`, so a term containing it (e.g. "đối tượng" becomes `/tags/đoi-tuong/`) needs an explicit slug in `content/tags/<term>/_index.md` (or `content/series/...`):
+
+```toml
++++
+title = "đối tượng"
+slug = "doi-tuong"
++++
+```
+
+Post URLs come from the directory name; keep those ASCII.
+
 ## Series
 
 A series groups ordered posts (part 1, part 2, ...). Add the `series` taxonomy and a part number to the front matter of each language file:
