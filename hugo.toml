@@ -26,6 +26,10 @@ capitalizeListTitles = false
   [params.page.code]
     copy = true
     maxShownLines = 100000
+  [params.header.title]
+    name = "NCT Blog"
+  [params.app]
+    title = "NCT Blog"
   [params.home.profile]
     enable = true
     avatarURL = "https://github.com/nguyen-cong-thanh.png"
