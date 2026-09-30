@@ -46,16 +46,22 @@ docker compose run --rm hugo new content posts/<slug>/index.en.md
 
 New posts have `draft = true`; set it to `false` to publish.
 
-## URLs without diacritics
+## Tag and series URLs
 
-`removePathAccents = true` in [hugo.toml](hugo.toml) strips accents from generated paths, so a tag such as "lập trình cơ bản" is served at `/tags/lap-trinh-co-ban/`. Hugo does not transliterate `đ`/`Đ`, so a term containing it (e.g. "đối tượng" becomes `/tags/đoi-tuong/`) needs an explicit slug in `content/tags/<term>/_index.md` (or `content/series/...`):
+Every tag and series has its URL set by hand, so URLs stay ASCII and stable. Hugo's default for a term is its name as written ("lập trình cơ bản" would become `/tags/lập-trình-cơ-bản/`), so a term without the file below is served at that default path.
+
+For each term and each language, add `content/<tags|series>/<term>/_index.<lang>.md`:
 
 ```toml
 +++
-title = "đối tượng"
-slug = "doi-tuong"
+title = "lập trình cơ bản"
+url = "/tags/lap-trinh-co-ban/"
 +++
 ```
+
+- `<term>` is the term as written in the post's front matter, lowercased, spaces replaced by `-` (accents kept): `lập-trình-cơ-bản`, `python-cơ-bản`, `hugo`.
+- `url` must include the language prefix for English (`/en/tags/hugo/`); Hugo does not add it for `url`.
+- `title` is the name shown on the page.
 
 Post URLs come from the directory name; keep those ASCII.
 

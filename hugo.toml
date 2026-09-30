@@ -6,7 +6,6 @@ defaultContentLanguage = "vi"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 enableEmoji = true
-removePathAccents = true
 capitalizeListTitles = false
 
 [taxonomies]
