@@ -87,6 +87,10 @@ LoveIt has no series support, so this is implemented in the site:
 
 `content/posts/python-basics-1/index.en.md` and `python-basics-2/index.en.md` are placeholder drafts left from the series setup; replace them when the English versions are written.
 
+## Mermaid diagrams
+
+LoveIt renders fenced blocks with the language `mermaid` (loaded from the CDN, light and dark aware). With Hugo 0.166 the theme's script was not included because `init.html` reset the page scratch after the markup render hook had set the mermaid flag. [layouts/_partials/init.html](layouts/_partials/init.html) is a copy of the theme's partial that only creates the scratch map when it does not exist yet. After updating the theme, re-apply that change on top of the new `themes/LoveIt/layouts/_partials/init.html`, or drop the copy if the theme fixes it.
+
 ## Deployment
 
 The workflow [.github/workflows/hugo.yaml](.github/workflows/hugo.yaml) builds and deploys on every push to `main`. The Hugo version is declared in `HUGO_VERSION` in the workflow and in the image tag in [compose.yaml](compose.yaml); change both when upgrading.
