@@ -1,7 +1,7 @@
 +++
 title = "An toàn thông tin cơ bản – Bài 2: Tư duy bảo mật"
 date = 2026-09-30T09:02:00+07:00
-draft = true
+draft = false
 tags = ["bảo mật", "an toàn thông tin", "vibe coding"]
 series = ["An toàn thông tin cơ bản"]
 series_weight = 2
@@ -131,7 +131,7 @@ Lỗi: attempt to write a readonly database
 
 ## Tài liệu tham khảo
 
-- [OWASP Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) <!-- TODO: kiểm tra link và nội dung -->
+- [OWASP Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html)
 - [OWASP Top 10:2025, A06 Insecure Design](https://owasp.org/Top10/2025/)
 - [NIST Cybersecurity Framework 2.0](https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20)
 - [CISA Secure by Design](https://www.cisa.gov/resources-tools/resources/secure-by-design)
