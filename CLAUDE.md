@@ -42,6 +42,7 @@ There is no length limit. Long posts rely on the table of contents; a topic that
 ## Code
 
 - Every code block must run as shown. State language and library versions in the prerequisites.
+- Run Python code on Python 3.14 (the version the Python series uses) and state that version in the prerequisites. Without Docker, `uv python install 3.14` provides an interpreter.
 - Put the output of a command or program right after the code, in its own block (use `text` as the language).
 - Comments inside code blocks follow the post language: Vietnamese in `index.vi.md`, English in `index.en.md`.
 - Always set the language on fenced code blocks.

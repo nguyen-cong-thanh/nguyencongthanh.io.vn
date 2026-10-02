@@ -23,7 +23,7 @@ Bài này nói về chuyện đó, và vì sao khi vibe code nhiều thì chuy�
 
 Cho bạn nào đang viết code, hoặc đang nhờ AI viết code, và chưa học gì về bảo mật. Bạn không cần biết trước thuật ngữ nào.
 
-Ví dụ bên dưới dùng Python và module `sqlite3` có sẵn, không cần cài thêm gì. Mình chạy thử trên Python 3.11; code không dùng gì riêng của bản mới, nên các bản 3.x gần đây đều chạy được.
+Ví dụ bên dưới dùng Python và module `sqlite3` có sẵn, không cần cài thêm gì. Mình chạy thử trên Python 3.14, cùng phiên bản với series Python cơ bản. Code không dùng gì riêng của bản mới, nên các bản 3.x gần đây cũng chạy được.
 
 ## Thu nhỏ vụ Enrichlead lại
 

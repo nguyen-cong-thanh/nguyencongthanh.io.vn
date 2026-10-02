@@ -17,7 +17,7 @@ Người muốn vào nhà thì nhìn từ bên ngoài. Họ không quan tâm c�
 
 ## Bài này dành cho ai
 
-Cho bạn nào đã đọc [bài 1](../infosec-basics-1/) hoặc đã viết được một ứng dụng web đơn giản. Bài không cần cài gì ngoài Python; đoạn code duy nhất dùng `sqlite3` và `secrets` có sẵn trong thư viện chuẩn. Mình chạy thử trên Python 3.11.
+Cho bạn nào đã đọc [bài 1](../infosec-basics-1/) hoặc đã viết được một ứng dụng web đơn giản. Bài không cần cài gì ngoài Python; đoạn code duy nhất dùng `sqlite3` và `secrets` có sẵn trong thư viện chuẩn. Mình chạy thử trên Python 3.14.
 
 ## Một ứng dụng ghi chú, và những cánh cửa của nó
 
