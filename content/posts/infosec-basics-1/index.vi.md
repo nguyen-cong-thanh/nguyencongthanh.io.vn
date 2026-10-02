@@ -137,7 +137,7 @@ Các nhóm lỗi trong series bám theo [OWASP Top 10:2025](https://owasp.org/To
 ## Tóm tắt
 
 - Code chạy đúng với đường đi bình thường chưa chắc an toàn. Lỗi bảo mật chỉ lộ ra khi có người cố tình làm điều bất thường.
-- Enrichlead và hàm đăng nhập ở trên cùng một kiểu: demo chạy ổn, không có tín hiệu lỗi nào, người ngoài thử là vỡ.
+- Enrichlead và hàm đăng nhập ở trên cùng một kiểu: demo chạy ổn, không có tín hiệu lỗi nào, người ngoài chỉ cần thử là phát hiện được lỗi.
 - Theo Veracode, khoảng 44 đến 45% tác vụ sinh code bằng AI trong bộ thử nghiệm của họ có lỗ hổng rủi ro, và con số ít thay đổi theo thời gian.
 - Một câu lệnh SQL ghép chuỗi từ dữ liệu người dùng có thể cho vào tài khoản mà không cần mật khẩu. Truyền dữ liệu qua tham số là cách sửa.
 

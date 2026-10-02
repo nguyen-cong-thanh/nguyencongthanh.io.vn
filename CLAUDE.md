@@ -15,6 +15,7 @@ These rules apply to post content only. Code, comments in site files and reposit
 ## Avoid
 
 - Exaggeration and marketing words: "cực kỳ mạnh mẽ", "tuyệt vời", "thay đổi cuộc chơi", "powerful", "game-changing", "seamless".
+- The word "vỡ" for something that was attacked, failed or found vulnerable; say what actually happened instead (bị khai thác, có lỗi, lộ ra).
 - Marks of AI-generated prose:
   - generic openings ("Trong thế giới công nghệ ngày nay...", "In today's fast-paced world...");
   - lists padded to three items for rhythm;

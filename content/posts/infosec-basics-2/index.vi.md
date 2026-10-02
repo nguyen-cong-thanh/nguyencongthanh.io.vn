@@ -11,7 +11,7 @@ Nhà bạn có một cửa chính chắc chắn, khóa ba chốt. Nhưng cửa s
 
 Người muốn vào nhà thì nhìn từ bên ngoài. Họ không quan tâm cửa chính chắc cỡ nào, họ đi vòng quanh nhà tìm chỗ yếu nhất. An toàn thông tin phần lớn là tập làm quen với việc đứng ở bên ngoài nhìn vào ứng dụng của chính mình.
 
-Ở bài trước, Enrichlead và hàm đăng nhập đều vỡ vì người làm ra chúng chỉ nhìn từ bên trong. Bài này là cách nhìn từ bên ngoài, đi qua vài khái niệm nền tảng, và mình sẽ dùng một ứng dụng ghi chú nhỏ xuyên suốt để các khái niệm có chỗ bám.
+Ở bài trước, Enrichlead và hàm đăng nhập đều có chỗ hở mà người làm ra không thấy, vì họ chỉ nhìn từ bên trong. Bài này là cách nhìn từ bên ngoài, đi qua vài khái niệm nền tảng, và mình sẽ dùng một ứng dụng ghi chú nhỏ xuyên suốt để các khái niệm có chỗ bám.
 
 <!--more-->
 
