@@ -7,25 +7,27 @@ series = ["An toàn thông tin cơ bản"]
 series_weight = 1
 +++
 
-Tháng 3/2025, người sáng lập Enrichlead, một dịch vụ tìm khách hàng tiềm năng cho đội bán hàng, chia sẻ trên mạng xã hội rằng toàn bộ sản phẩm do Cursor viết, không có dòng nào viết tay. Vài ngày sau khi ra mắt, chính người đó đăng rằng sản phẩm đang bị tấn công: hạn mức API bị dùng cạn, người dùng vượt qua được gói trả phí, dữ liệu bị tạo lung tung.
+Mình muốn mở series bằng một câu chuyện của người khác.
 
-Theo các bài phân tích về vụ này, nguyên nhân khá cơ bản. Việc kiểm tra gói trả phí chỉ diễn ra ở giao diện, nên đổi một giá trị trong trình duyệt là dùng được tính năng trả phí. API key nằm ngay trong JavaScript phía client, ai mở tab Network cũng thấy. Người sáng lập nhờ Cursor sửa tiếp thì theo lời kể, các chỗ khác lại hỏng, và sản phẩm đóng cửa.
+Tháng 3/2025, người sáng lập Enrichlead, một dịch vụ tìm khách hàng tiềm năng cho đội bán hàng, khoe trên mạng xã hội rằng toàn bộ sản phẩm do Cursor viết, không có dòng nào viết tay. Vài ngày sau khi ra mắt, chính người đó đăng lên: sản phẩm đang bị tấn công. Hạn mức API bị dùng cạn, người dùng vượt qua được gói trả phí, dữ liệu bị tạo lung tung.
 
-Sản phẩm đó chạy được khi demo. Không có thông báo lỗi nào cho thấy nó thiếu an toàn, vì mọi thứ hoạt động đúng với cách người làm ra nó thử. Chỉ khi người khác thử những điều người làm không nghĩ tới, vấn đề mới lộ ra.
+Theo các bài phân tích về vụ này, nguyên nhân khá cơ bản. Việc kiểm tra gói trả phí chỉ nằm ở giao diện, nên đổi một giá trị trong trình duyệt là dùng được tính năng trả phí. API key nằm ngay trong JavaScript phía client, ai mở tab Network cũng thấy. Người sáng lập nhờ Cursor sửa tiếp thì theo lời kể, các chỗ khác lại hỏng theo, và sản phẩm đóng cửa.
 
-Series này đi qua các mảng chính của an toàn thông tin, từ tư duy nền tảng đến việc dùng AI để viết code. Bài đầu tiên nói về lý do bạn nên bắt đầu.
+Điều đáng chú ý là sản phẩm đó chạy ổn khi demo. Không có thông báo lỗi nào, không có gì đỏ trên màn hình. Mọi thứ hoạt động đúng theo cách người làm ra nó thử. Chỉ đến khi người khác thử những điều người làm không nghĩ tới thì mọi chuyện mới lộ ra.
+
+Bài này nói về chuyện đó, và vì sao khi vibe code nhiều thì chuyện đó càng đáng để ý.
 
 <!--more-->
 
 ## Bài này dành cho ai
 
-Bài dành cho người đã viết code, hoặc đang nhờ AI viết code, và chưa học gì về bảo mật. Bạn không cần biết trước thuật ngữ nào.
+Cho bạn nào đang viết code, hoặc đang nhờ AI viết code, và chưa học gì về bảo mật. Bạn không cần biết trước thuật ngữ nào.
 
-Đoạn code trong bài dùng Python và module `sqlite3` có sẵn trong thư viện chuẩn, không cần cài thêm gì. Mình đã chạy thử trên Python 3.11; code không dùng tính năng riêng của bản Python mới hơn, nên các bản 3.x gần đây đều chạy được.
+Ví dụ bên dưới dùng Python và module `sqlite3` có sẵn, không cần cài thêm gì. Mình chạy thử trên Python 3.11; code không dùng gì riêng của bản mới, nên các bản 3.x gần đây đều chạy được.
 
-## Code chạy được không có nghĩa là an toàn
+## Thu nhỏ vụ Enrichlead lại
 
-Đây là kiểu code mà một trợ lý AI, hay một người đang vội, rất dễ viết ra cho chức năng đăng nhập:
+Enrichlead hơi to để ngồi mổ xẻ, nên mình thu nhỏ lại thành một hàm đăng nhập. Đây là kiểu code mà một trợ lý AI, hay một người đang vội, rất dễ viết ra:
 
 ```python
 import sqlite3
@@ -46,7 +48,7 @@ print(dang_nhap("an", "sai"))
 print(dang_nhap("an", "' OR '1'='1"))
 ```
 
-Chạy file này, bạn nhận được:
+Trước khi chạy, bạn thử đoán xem ba dòng `print` in ra gì. Hai dòng đầu dễ: đúng mật khẩu thì `True`, sai thì `False`. Dòng thứ ba thì sao?
 
 ```text
 True
@@ -54,17 +56,17 @@ False
 True
 ```
 
-Hai dòng đầu là những gì bạn sẽ tự thử: đúng mật khẩu thì `True`, sai thì `False`. Dòng thứ ba là thứ kẻ tấn công thử. Người đó không biết mật khẩu của `an`, chỉ nhập một chuỗi có dấu nháy đơn, và hàm vẫn trả về `True`.
+Dòng thứ ba cũng `True`. Người này không biết mật khẩu của `an`, chỉ gõ một chuỗi có dấu nháy đơn, và hàm vẫn cho vào.
 
-Lý do nằm ở câu lệnh SQL sau khi ghép chuỗi:
+Để hiểu vì sao, hãy nhìn câu lệnh SQL thật sự được gửi đi sau khi ghép chuỗi:
 
 ```text
 SELECT name FROM users WHERE name = 'an' AND password = '' OR '1'='1'
 ```
 
-Phần `OR '1'='1'` luôn đúng, nên điều kiện tìm người dùng luôn thỏa. Dữ liệu nhập vào đã trở thành một phần của câu lệnh. Lỗi này gọi là SQL injection, và bài 5 sẽ nói kỹ hơn.
+Phần `OR '1'='1'` luôn đúng, nên điều kiện tìm người dùng luôn thỏa. Dữ liệu người dùng gõ vào đã biến thành một phần của câu lệnh. Lỗi này tên là SQL injection, bài 5 sẽ quay lại.
 
-Cách sửa chỉ cần đổi vài dòng: đưa dữ liệu vào qua tham số thay vì ghép chuỗi.
+Sửa thì chỉ cần đổi vài dòng: đưa dữ liệu vào qua tham số thay vì ghép chuỗi.
 
 ```python
 import sqlite3
@@ -91,82 +93,59 @@ False
 False
 ```
 
-Hai phiên bản hoạt động giống nhau với mọi thử nghiệm thông thường. Chỉ khi bạn cố tình nhập dữ liệu có hại, hai bản mới khác nhau. Đó là điều khó nhất của bảo mật: lỗi không làm ứng dụng hỏng, nên bạn không có tín hiệu nào để phát hiện.
+Cả hai phiên bản trả lời giống hệt nhau với mọi thử nghiệm bình thường. Chỉ khi có người cố tình gõ thứ kỳ lạ thì chúng mới khác nhau. Nếu bạn là người viết ra bản đầu tiên rồi chạy thử hai trường hợp đúng và sai, bạn sẽ thấy mọi thứ ổn và đi làm việc khác. Y hệt Enrichlead.
 
-Ví dụ trên còn một lỗi nữa: mật khẩu được lưu nguyên văn trong cơ sở dữ liệu. Bài 4 sẽ nói cách lưu đúng.
+Còn một lỗi nữa trong ví dụ mà bạn có thể đã thấy: mật khẩu được lưu nguyên văn trong cơ sở dữ liệu. Bài 4 sẽ nói cách lưu đúng.
 
-## Số liệu về code do AI sinh ra
+## AI có hay viết code kiểu này không
 
-Veracode, một công ty bảo mật ứng dụng, đã cho hơn 100 mô hình ngôn ngữ lớn làm 80 tác vụ lập trình được thiết kế sao cho mỗi tác vụ có một cách viết an toàn và một cách viết không an toàn. Báo cáo năm 2025 ghi nhận code có lỗ hổng bảo mật rủi ro ở khoảng 45% số lần thử. Báo cáo năm 2026 cho kết quả gần như không đổi: khoảng 44% tác vụ có lỗ hổng, tỷ lệ đạt trung bình 56%.
+Veracode, một công ty bảo mật ứng dụng, từng cho hơn 100 mô hình ngôn ngữ lớn làm 80 tác vụ lập trình. Mỗi tác vụ có một cách viết an toàn và một cách viết không an toàn, và họ xem mô hình chọn cách nào. Báo cáo năm 2025 ghi nhận khoảng 45% lần thử cho ra code có lỗ hổng rủi ro. Báo cáo năm 2026 gần như không đổi: khoảng 44%, tỷ lệ đạt trung bình 56%.
 
-Vài điểm để đọc con số này cho đúng:
+Đừng đọc con số này như xác suất đoạn code của bạn có lỗi. Đó là kết quả trên một bộ bài do một công ty thiết kế. Nhưng có một điểm đáng nhớ: theo báo cáo, các mô hình ngày càng viết code đúng cú pháp và chạy được, còn chuyện viết code an toàn thì không tiến bộ theo cùng tốc độ. Hai chuyện này khác nhau, và ví dụ đăng nhập ở trên là minh họa khá rõ.
 
-- Đây là kết quả trên một bộ tác vụ do một công ty thiết kế. Nó cho biết xu hướng, không phải xác suất mà đoạn code của bạn có lỗi.
-- Các mô hình viết code đúng cú pháp và chạy được ngày càng tốt, nhưng theo báo cáo, khả năng viết code an toàn không tăng theo cùng tốc độ.
-- Theo báo cáo, các lỗi như XSS và log injection là những chỗ mô hình thất bại nhiều nhất. Cả hai sẽ xuất hiện lại ở phần sau của series.
+## Vì sao lỗi cứ lọt qua
 
-Bạn không cần tin tuyệt đối vào từng con số. Chỉ cần nhớ rằng "AI viết, chạy được" chưa đủ làm bằng chứng cho "an toàn".
+Mình có vài suy đoán, và đây là nhận định của mình, không phải kết luận của nghiên cứu nào.
 
-## Vì sao lỗi dễ lọt qua
+Thứ nhất, yêu cầu thường chỉ mô tả chức năng. "Viết giúp mình trang đăng nhập" không nói gì về chuyện người dùng gõ dữ liệu có hại, nên mô hình làm đúng điều được nhờ.
 
-Có vài lý do khiến vibe code dễ để lại lỗ hổng. Các lý do này là nhận định của mình, chưa phải kết luận của một nghiên cứu cụ thể.
+Thứ hai, chúng ta test theo đường đi bình thường. Người dùng thật hiếm khi gõ `' OR '1'='1`, nên người viết cũng không nghĩ đến chuyện thử.
 
-- **Yêu cầu chỉ mô tả chức năng.** "Viết trang đăng nhập" không nói gì về việc chống người dùng nhập dữ liệu có hại. Mô hình làm điều bạn yêu cầu.
-- **Kiểm tra chỉ theo đường đi bình thường.** Người dùng thật hiếm khi nhập `' OR '1'='1`, nên bạn cũng không nghĩ đến việc thử.
-- **Ít đọc lại code.** Khi code do AI viết và chạy được ngay, thói quen đọc từng dòng giảm đi. Chính lúc đó lỗi ẩn dễ nằm lại.
-- **Lỗi bảo mật không báo lỗi.** Ứng dụng không dừng, không in ra gì. Vấn đề chỉ lộ ra khi có người khai thác.
+Thứ ba, code do AI viết mà chạy được ngay thì thói quen đọc từng dòng giảm đi. Chỗ lỗi ẩn nằm lại chính ở đó.
 
-## Những nhóm lỗi sẽ gặp lại
+Và quan trọng nhất, lỗi bảo mật không kêu. Ứng dụng không dừng, không in lỗi. Nó chỉ lộ ra khi có người khai thác, như Enrichlead.
 
-Bảng OWASP Top 10 là danh sách các nhóm rủi ro phổ biến nhất của ứng dụng web do tổ chức OWASP công bố. Bản mới nhất là bản 2025, với thứ tự như sau:
+## Series sẽ đi qua những gì
 
-| Mã | Nhóm |
-|----|------|
-| A01 | Broken Access Control |
-| A02 | Security Misconfiguration |
-| A03 | Software Supply Chain Failures |
-| A04 | Cryptographic Failures |
-| A05 | Injection |
-| A06 | Insecure Design |
-| A07 | Authentication Failures |
-| A08 | Software or Data Integrity Failures |
-| A09 | Security Logging and Alerting Failures |
-| A10 | Mishandling of Exceptional Conditions |
+Cho ai muốn biết trước, đây là 12 bài dự kiến:
 
-Ví dụ SQL injection ở trên thuộc nhóm Injection (A05). Series không đi lần lượt theo bảng này mà chia theo cách một người làm phần mềm gặp chúng trong công việc.
+- Bài 1: bài này.
+- Bài 2: tư duy bảo mật, tức là nghĩ như người muốn phá ứng dụng của mình.
+- Bài 3: mật mã cơ bản.
+- Bài 4: xác thực và phân quyền.
+- Bài 5: bảo mật ứng dụng web, gồm SQL injection ở trên.
+- Bài 6: secret và cấu hình, tức là chuyện API key nằm lung tung như ở Enrichlead.
+- Bài 7: dependency và chuỗi cung ứng.
+- Bài 8: bảo mật khi dùng AI coding assistant.
+- Bài 9: mạng, cloud và container.
+- Bài 10: con người và thiết bị.
+- Bài 11: dữ liệu và quyền riêng tư.
+- Bài 12: giám sát, ứng phó sự cố và học tiếp.
 
-## Bản đồ series
-
-| Bài | Nội dung |
-|-----|----------|
-| 1 | Vì sao vibe code cần an toàn thông tin (bài này) |
-| 2 | Tư duy bảo mật: mục tiêu, mối đe dọa, bề mặt tấn công |
-| 3 | Mật mã cơ bản |
-| 4 | Xác thực và phân quyền |
-| 5 | Bảo mật ứng dụng web |
-| 6 | Secret và cấu hình |
-| 7 | Dependency và chuỗi cung ứng |
-| 8 | Bảo mật khi dùng AI coding assistant |
-| 9 | Mạng, cloud và container |
-| 10 | Con người và thiết bị |
-| 11 | Dữ liệu và quyền riêng tư |
-| 12 | Giám sát, ứng phó sự cố và học tiếp |
-
-Bài 2 đến 4 là nền tảng nên đọc theo thứ tự. Các bài từ 5 trở đi khá độc lập, bạn có thể nhảy đến phần cần dùng.
+Các nhóm lỗi trong series bám theo [OWASP Top 10:2025](https://owasp.org/Top10/2025/), danh sách rủi ro phổ biến nhất của ứng dụng web do tổ chức OWASP công bố. Bài 2 đến 4 là nền tảng nên đọc theo thứ tự. Các bài sau khá độc lập, bạn cần phần nào thì nhảy tới phần đó.
 
 ## Tóm tắt
 
-- Code chạy đúng với đường đi bình thường chưa chắc an toàn. Lỗi bảo mật thường chỉ lộ ra khi có người cố tình nhập dữ liệu có hại.
-- Theo báo cáo của Veracode, khoảng 44 đến 45% tác vụ sinh code bằng AI trong bộ thử nghiệm của họ có lỗ hổng bảo mật rủi ro, và con số này ít thay đổi theo thời gian.
-- Một câu lệnh SQL ghép chuỗi từ dữ liệu người dùng cho phép vào tài khoản mà không cần mật khẩu. Đưa dữ liệu qua tham số là cách sửa.
-- Vụ Enrichlead cho thấy hai lỗi rất phổ biến ở code do AI viết: kiểm tra quyền chỉ ở phía client và để secret trong code phía client.
-- Series đi qua 12 bài, từ tư duy nền tảng đến bảo mật khi dùng AI để viết code.
+- Code chạy đúng với đường đi bình thường chưa chắc an toàn. Lỗi bảo mật chỉ lộ ra khi có người cố tình làm điều bất thường.
+- Enrichlead và hàm đăng nhập ở trên cùng một kiểu: demo chạy ổn, không có tín hiệu lỗi nào, người ngoài thử là vỡ.
+- Theo Veracode, khoảng 44 đến 45% tác vụ sinh code bằng AI trong bộ thử nghiệm của họ có lỗ hổng rủi ro, và con số ít thay đổi theo thời gian.
+- Một câu lệnh SQL ghép chuỗi từ dữ liệu người dùng có thể cho vào tài khoản mà không cần mật khẩu. Truyền dữ liệu qua tham số là cách sửa.
 
 ## Tài liệu tham khảo
 
-- [Veracode GenAI Code Security Report 2026](https://www.veracode.com/blog/2026-genai-code-security-report-ai-risk/)
-- [Veracode GenAI Code Security Report 2025](https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/)
 - [Vibe Graveyard: Enrichlead](https://vibegraveyard.ai/story/enrichlead-vibe-coded-saas-shutdown/)
 - [Kaspersky: Security risks of vibe coding and LLM assistants for developers](https://www.kaspersky.com/blog/vibe-coding-2025-risks/54584/)
+- [Veracode GenAI Code Security Report 2026](https://www.veracode.com/blog/2026-genai-code-security-report-ai-risk/)
+- [Veracode GenAI Code Security Report 2025](https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/)
 - [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 - [Tài liệu Python: sqlite3, dùng placeholder cho tham số](https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders)

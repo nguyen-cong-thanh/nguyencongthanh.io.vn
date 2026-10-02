@@ -7,6 +7,7 @@ Rules for drafting, editing, translating and checking posts in `content/`. Site 
 These rules apply to post content only. Code, comments in site files and repository docs follow the usual conventions.
 
 - Friendly, storytelling tone. A post may open with a personal experience, a problem the author ran into, or an everyday analogy, while staying technically precise.
+- Write like a blog, not a textbook: conversational, talk to the reader, and lead with an example or a story before the explanation. Introduce a term after the reader has seen the problem it solves. Avoid tables and long lists where a few paragraphs would read more naturally.
 - Vietnamese posts use "mình" for the author and "bạn" for the reader.
 - English posts use "I" and "you".
 - Keep technical terms in English (function, deploy, commit, container, ...). Use Vietnamese only where the Vietnamese word is already standard (biến, vòng lặp, hàm). Do not add English glosses in parentheses for terms that are left in English.
