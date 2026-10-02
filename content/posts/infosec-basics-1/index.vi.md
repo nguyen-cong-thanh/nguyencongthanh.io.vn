@@ -1,17 +1,17 @@
 +++
 title = "An toàn thông tin cơ bản – Bài 1: Vì sao vibe code cần an toàn thông tin"
 date = 2026-09-30T09:01:00+07:00
-draft = true
+draft = false
 tags = ["bảo mật", "an toàn thông tin", "vibe coding"]
 series = ["An toàn thông tin cơ bản"]
 series_weight = 1
 +++
 
-Hãy hình dung bạn nhờ một AI viết trang đăng nhập cho ứng dụng đang làm dở. Vài chục giây sau, code hiện ra. Bạn chạy thử: nhập đúng mật khẩu thì vào được, nhập sai thì bị từ chối. Mọi thứ hoạt động, bạn chuyển sang tính năng tiếp theo.
+Tháng 3/2025, người sáng lập Enrichlead, một dịch vụ tìm khách hàng tiềm năng cho đội bán hàng, chia sẻ trên mạng xã hội rằng toàn bộ sản phẩm do Cursor viết, không có dòng nào viết tay. Vài ngày sau khi ra mắt, chính người đó đăng rằng sản phẩm đang bị tấn công: hạn mức API bị dùng cạn, người dùng vượt qua được gói trả phí, dữ liệu bị tạo lung tung.
 
-Trang đăng nhập đó vẫn có thể cho người lạ vào mà không cần biết mật khẩu. Không có dòng lỗi nào hiện ra, vì ứng dụng làm đúng những gì bạn kiểm tra. Bạn chỉ chưa kiểm tra điều mà kẻ tấn công sẽ thử.
+Theo các bài phân tích về vụ này, nguyên nhân khá cơ bản. Việc kiểm tra gói trả phí chỉ diễn ra ở giao diện, nên đổi một giá trị trong trình duyệt là dùng được tính năng trả phí. API key nằm ngay trong JavaScript phía client, ai mở tab Network cũng thấy. Người sáng lập nhờ Cursor sửa tiếp thì theo lời kể, các chỗ khác lại hỏng, và sản phẩm đóng cửa.
 
-<!-- TODO: câu chuyện hoặc tình huống thật của bạn: lần đầu bạn nhận ra code chạy đúng mà vẫn không an toàn, hoặc lý do bạn muốn viết series này. Nếu không có, có thể bỏ đoạn này. -->
+Sản phẩm đó chạy được khi demo. Không có thông báo lỗi nào cho thấy nó thiếu an toàn, vì mọi thứ hoạt động đúng với cách người làm ra nó thử. Chỉ khi người khác thử những điều người làm không nghĩ tới, vấn đề mới lộ ra.
 
 Series này đi qua các mảng chính của an toàn thông tin, từ tư duy nền tảng đến việc dùng AI để viết code. Bài đầu tiên nói về lý do bạn nên bắt đầu.
 
@@ -99,8 +99,6 @@ Ví dụ trên còn một lỗi nữa: mật khẩu được lưu nguyên văn t
 
 Veracode, một công ty bảo mật ứng dụng, đã cho hơn 100 mô hình ngôn ngữ lớn làm 80 tác vụ lập trình được thiết kế sao cho mỗi tác vụ có một cách viết an toàn và một cách viết không an toàn. Báo cáo năm 2025 ghi nhận code có lỗ hổng bảo mật rủi ro ở khoảng 45% số lần thử. Báo cáo năm 2026 cho kết quả gần như không đổi: khoảng 44% tác vụ có lỗ hổng, tỷ lệ đạt trung bình 56%.
 
-<!-- TODO: đối chiếu các con số trên với báo cáo gốc của Veracode (2025 và 2026) trước khi publish, gồm số mô hình, số tác vụ và cách tính tỷ lệ. Các số này lấy từ kết quả tìm kiếm, chưa đọc từ trang gốc. -->
-
 Vài điểm để đọc con số này cho đúng:
 
 - Đây là kết quả trên một bộ tác vụ do một công ty thiết kế. Nó cho biết xu hướng, không phải xác suất mà đoạn code của bạn có lỗi.
@@ -135,8 +133,6 @@ Bảng OWASP Top 10 là danh sách các nhóm rủi ro phổ biến nhất của
 | A09 | Security Logging and Alerting Failures |
 | A10 | Mishandling of Exceptional Conditions |
 
-<!-- TODO: đối chiếu bảng này với trang gốc https://owasp.org/Top10/2025/ trước khi publish. Bảng lấy từ kết quả tìm kiếm. -->
-
 Ví dụ SQL injection ở trên thuộc nhóm Injection (A05). Series không đi lần lượt theo bảng này mà chia theo cách một người làm phần mềm gặp chúng trong công việc.
 
 ## Bản đồ series
@@ -163,11 +159,14 @@ Bài 2 đến 4 là nền tảng nên đọc theo thứ tự. Các bài từ 5 t
 - Code chạy đúng với đường đi bình thường chưa chắc an toàn. Lỗi bảo mật thường chỉ lộ ra khi có người cố tình nhập dữ liệu có hại.
 - Theo báo cáo của Veracode, khoảng 44 đến 45% tác vụ sinh code bằng AI trong bộ thử nghiệm của họ có lỗ hổng bảo mật rủi ro, và con số này ít thay đổi theo thời gian.
 - Một câu lệnh SQL ghép chuỗi từ dữ liệu người dùng cho phép vào tài khoản mà không cần mật khẩu. Đưa dữ liệu qua tham số là cách sửa.
+- Vụ Enrichlead cho thấy hai lỗi rất phổ biến ở code do AI viết: kiểm tra quyền chỉ ở phía client và để secret trong code phía client.
 - Series đi qua 12 bài, từ tư duy nền tảng đến bảo mật khi dùng AI để viết code.
 
 ## Tài liệu tham khảo
 
 - [Veracode GenAI Code Security Report 2026](https://www.veracode.com/blog/2026-genai-code-security-report-ai-risk/)
 - [Veracode GenAI Code Security Report 2025](https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/)
+- [Vibe Graveyard: Enrichlead](https://vibegraveyard.ai/story/enrichlead-vibe-coded-saas-shutdown/)
+- [Kaspersky: Security risks of vibe coding and LLM assistants for developers](https://www.kaspersky.com/blog/vibe-coding-2025-risks/54584/)
 - [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 - [Tài liệu Python: sqlite3, dùng placeholder cho tham số](https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders)
